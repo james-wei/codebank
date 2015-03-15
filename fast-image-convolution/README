@@ -1,0 +1,19 @@
+Fast Image Convolution
+=======================
+
+We optimize a formula for doing 2D convolution on images. 
+
+This project was developed, tested, and run on a Dell Precision T5500 
+Workstation with two Intel Xeon E5620 microprocessors (codename Westmere). 
+Each has 4 cores, for a total of 8 processors, and each core runs at a 
+clock rate of 2.40 GHz.
+
+All caches deal with block sizes of 64 bytes. Each core has an L1 instruction 
+and L1 data cache, both 32 Kibibytes. A core also has a unified L2 cache 
+(same cache for instructions and data) of 256 Kibibytes. The 4 cores on a 
+microprocessor share an L3 cache of 12 Mibibytes. The L1, L2 caches are 
+8-way associative, while L3 is 16-way associative.
+
+We optimize for a variety of kernels using techniques including register 
+blocking, SSE Instructions, loop unrolling, padding matrices, cache blocking,
+and parallelization using OpenMP.

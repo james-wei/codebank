@@ -1,0 +1,78 @@
+In this project I implement a simulation of an ocean containing sharks
+and fish.  I also write code to convert an ocean into a run-length
+encoding and back.  The ocean is rectangular, but the edges are connected
+together in a topological donut or torus.  This means that the top (North) and
+bottom (South) edges are considered adjacent, so if you start at the top edge
+and go up, you'll be at the bottom edge (just like in the video game
+Asteroids).  Similarly, the East and West edges are connected (just like in
+Pac Man).  The ocean is divided into square cells.
+
+There are two kinds of entities in this ocean:  sharks and fish.  The sharks
+and fish breed, eat, and die in the ocean.  Each cell of the grid can be
+occupied by a single shark or fish, or it can be empty.
+
+I:  Simulating Sharks and Fish
+===============================
+
+An ocean is described by its size and the initial placement of sharks and fish
+in the ocean.  It is also described by a parameter called the "starveTime" for
+a shark.  This is the number of simulation timesteps that a shark can live
+through without eating.
+
+The simulation proceeds in timesteps.  A "timestep" is a _transition_ from one
+ocean to the next.  
+
+The contents of any particular cell at the end of a timestep depend only on the
+contents of that cell and its eight neighbors at the beginning of the timestep.
+The "neighbors" are the eight adjacent cells:  
+
+1) If a cell contains a shark, and any of its neighbors is a fish, then the
+shark eats during the timestep, and it remains in the cell at the end of the
+timestep with its hunger completely gone.
+
+2) If a cell contains a shark, and none of its neighbors is a fish, it gets
+hungrier during the timestep.  If this timestep is the (starveTime + 1)th
+consecutive timestep the shark has gone through without eating, then the shark
+dies (disappears).  Otherwise, it remains in the cell.
+
+3) If a cell contains a fish, and all of its neighbors are either empty or are
+other fish, then the fish stays where it is.
+
+4) If a cell contains a fish, and one of its neighbors is a shark, then the
+fish is eaten by a shark, and therefore disappears.
+
+5) If a cell contains a fish, and two or more of its neighbors are sharks, then
+a new shark is born in that cell.
+
+6) If a cell is empty, and fewer than two of its neighbors are fish, then the
+cell remains empty.
+
+7) If a cell is empty, at least two of its neighbors are fish, and at most one
+of its neighbors is a shark, then a new fish is born in that cell.
+
+8) If a cell is empty, at least two of its neighbors are fish, and at least two
+of its neighbors are sharks, then a new shark is born in that cell.  (The new
+shark is well-fed at birth, even though it hasn't eaten a fish yet.)
+
+The Simulation and SimText classes (which consist primarily of a simulation
+driver called main) generate random input to initialize the ocean, and animate
+the sequence of oceans returned by the timeStep method of your Ocean class.  
+
+The Simulation and SimText programs take up to three command-line parameters.
+The first two specify the width and height of the ocean.  The third parameter
+specifies the value of starveTime.  For example, if you run
+
+    java Simulation 25 30 1
+
+then Simulation will animate a 25x30 ocean with a starveTime of 1.  If you run
+"java Simulation" with no parameters, by default Simulation will animate a
+80x80 ocean with a starveTime of 3.
+
+II:  Converting a Run-Length Encoding to an Ocean, and vice-versa
+==================================================================
+
+For a large ocean, an Ocean object can consume quite a bit of memory or disk
+space.  For long-term storage, I can store an Ocean more efficiently by
+representing it as a run-length encoding.  
+
+The RunLengthEncoding class represents a linked list of run objects.

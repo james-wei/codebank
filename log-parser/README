@@ -1,0 +1,14 @@
+Log Parser
+===========
+
+This is a utility written in Python used to pare a large web server access log file with regular syntax. Given some input file, this program outputs the top N (where N is also an input parameter) URLs found in the log file. The program works even when the log file is more than an order of magnitude larger than main memory available to the program.
+
+A sample log file is given by sample.log.
+
+Usage is as follows:
+    logparse.py [-h] [--file_name FN] [--num_output N] [--verbose]
+    optional arguments:
+      -h, --help              show this help message and exit
+      --file_name FN, -f FN   Name or path of target web server log file (default: "sample.log")
+      --num_output N, -n N    Number of results to output (default: 10)
+      --verbose, -v           Verbose output (default: False)

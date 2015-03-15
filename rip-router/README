@@ -1,0 +1,33 @@
+RIP Router
+===========
+
+We implement an algorithm for a distrubted routing system, where all routers run 
+on this algorithm will be able to successfully transport packets to their 
+appropriate destination without a central authority.
+
+We use a RIP-like distance vector protocol to provide stable, efficient,
+loop-free paths across the network. Routers share the paths they have with their 
+neighbors, who use this information to construct their own forwarding tables.
+
+We process several different datatypes at each router:
+- DiscoveryPackets are received by either ends of a link when either the link 
+goes up or the link goes down.
+- RoutingUpdates contain the routing information that is received from the 
+neighbors.
+- Other packets are data packets which need to be sent on an appropriate port 
+based on switch’s current routing table.
+
+DiscoveryPackets are sent automatically to both the ends of a link whenever the 
+link goes up/down. Our RIPRouter maintains a forwarding table and announces its 
+paths using the RoutingUpdate class, which is also used to share forwarding
+tables with other routers.
+
+On receiving RoutingUpdate messages from its neighbors, our router prefers
+(1) routes with the lowest hop count, (2) for multiple routes with the same hop 
+count, it prefers routes to the neighbor with the lower port ID number.
+
+Our solution also quickly and efficiently generate new, optimal routes when 
+links fail or come up.
+
+Our implementation also performs implicit withdrawals and Poison reverse to
+prevent loops.

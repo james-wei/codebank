@@ -1,0 +1,14 @@
+Secure Image Metadata Extraction Tool
+======================================
+
+We write a metadata-extraction tool for PNG and JPEG-Exif images while
+taking care to make sure our tool is secure against malicious inputs. 
+
+For valid PNG files, our program prints out one line per tEXt, zTXt, 
+or tIME chunk.
+
+For valid JPEG files, our program prints out one line per Exif tag for 
+the following Exif tag types: DocumentName, ImageDescription, Make, Model, 
+Software, DateTime, Artist, HostComputer, Copyright, RelatedSoundFile, 
+DateTimeOriginal, DateTimeDigitized, MakerNote, UserComment, and 
+ImageUniqueID.
